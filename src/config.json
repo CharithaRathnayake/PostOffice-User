@@ -1,0 +1,11 @@
+{
+    "firebaseConfig" : {
+        "apiKey": "AIzaSyDXONSGNu_khwenQFOLJjm5S9CQe--Y4tI",
+        "authDomain": "post-office-mis-505cc.firebaseapp.com",
+        "projectId": "post-office-mis-505cc",
+        "storageBucket": "post-office-mis-505cc.appspot.com",
+        "messagingSenderId": "931799860828",
+        "appId": "1:931799860828:web:ea6404206acd1e560a8899",
+        "measurementId": "G-WRG3Q0WPKG"
+      }
+}
