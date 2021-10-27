@@ -12,7 +12,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import delivery from '../images/delivery.jpg';
 import DeliveryCalc from "./deliveryCalc";
 
-
 const useStyles = makeStyles((theme) => ({
     
     errorText:{
@@ -67,11 +66,7 @@ function DeliveryForm(pid) {
         },
         
         
-    });
-    
-    
-    
-     
+    });     
     return(
         <>
             <CssBaseline />
@@ -121,14 +116,14 @@ function DeliveryForm(pid) {
                             </span>
                         </div>
                         <br/>  
-                        <Button fullWidth type="submit"  variant="contained"color="secondary" >Submit</Button>
+                        <Button fullWidth type="submit"  variant="contained"color="primary" >Submit</Button>
                         <br/><br/>
                     </form>
 
                 
                 </Typography>
                 
-                {((locations.dataRetrieved))?
+                {((locations.dataRetrieved)&&(open===true))?
                 <DeliveryCalc locations={locations}/>
                 
                     

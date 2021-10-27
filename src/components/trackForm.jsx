@@ -1,7 +1,8 @@
 import React from "react";
 import {useDispatch,useSelector} from "react-redux";
 import {getPostLocationStart} from "./pages/DeliveryTime/checkDTActions";
-import { CircularProgress, Grid } from "@material-ui/core";
+import {getDestinationStart} from "./pages/Track/trackingActions";
+import { Grid } from "@material-ui/core";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -11,12 +12,16 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import track from '../images/track.jpg';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import {getDistance} from 'geolib';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import marker from '../images/mailMarker.png';
+
+
+
 
 const useStyles = makeStyles((theme) => ({
     
@@ -31,29 +36,39 @@ const useStyles = makeStyles((theme) => ({
       },
         
   }));
-const Transition = React.forwardRef(function Transition(props, ref) {
+  const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 function TrackForm(pid) {
     //console.log(pid.Ppid);
     const locations = useSelector((state) => state.checkDTReducer);
+    const destination = useSelector((state) => state.trackingReducer);
     const [open, setOpen] = React.useState(false);
+    const [showingInfoWindow, setShowingInfoWindow] = React.useState(false);
     const classes = useStyles();
     const PID=pid.Ppid.map((option)=> (option.pid))
     const delivered=pid.Dpid.map((option)=>(option.pid))
     PID.push(...delivered);
-
+    let long;
+    let lat;
+    let currentPID;
+    
     const dispatch = useDispatch();  
-    const validate =(values,open)=>{
+    const validate =(values)=>{
         const errors={};
         
         if (PID.includes(values.pid)===false){
             errors.pid="Post ID is not valid";
-        }else{
-            setOpen(true);
         }
         return errors;
     }
+    const handleOpen=()=>{
+        setOpen(true);
+        
+    }
+    const handleClose = () => {
+        setOpen(false);
+    };
     const initialState=useFormik({
         initialValues:{ 
             pid:""                
@@ -62,44 +77,56 @@ function TrackForm(pid) {
         onSubmit:(values,{resetForm})=>{
             
             initialState.touched.pid=false;
+            //console.log("pid");
+            handleOpen();
+             if(delivered.includes(initialState.values.pid)){
+                console.log("dest dispatch")
+                dispatch(getDestinationStart(initialState));
+                
+            }else{
+                console.log("dispatch loca")
+                dispatch(getPostLocationStart(initialState));
+               
+            }                          
             
-                                       
-            dispatch(getPostLocationStart(initialState));
             resetForm({})
         },
         
         
-    });
-
-    const handleClickOpen = () => {
-        setOpen(true);
-      };
+    }); 
+    const mapStyles = {        
+        height: "100vh",
+        width: "100%"};
+    //console.log(locations)  
+    const onMarkerClick = () => {
+        setShowingInfoWindow(true);
+    };
     
-    const handleClose = () => {
-        setOpen(false);
-      };
-    
-    if (locations.dataRetrieved===true){
-        
-        console.log("deliveryF[0]location",locations);
-        var dis = getDistance(
-            {latitude: locations.location[0].location[0].location._lat, longitude: locations.location[0].location[0].location._long},
-            {latitude: locations.location[0].location[locations.location[0].location.length-1].location._lat, longitude: locations.location[0].location[locations.location[0].location.length-1].location._long},
-        );
-        
-        var distance= dis/1000; 
-        var days=0
-        if (distance===0){
-             days=0;
-        }else if(distance<=50){
-             days=1;
-        }else if(distance<=200){
-             days=2;
-        }else{
-             days=3;
+    const onInfoWindowClose = () =>{ 
+        setShowingInfoWindow(false);
+    };
+    if (locations.dataRetrieved!==undefined ){
+        if (locations.dataRetrieved){
+            long=locations.location[0].location[locations.location[0].location.length-1].location._long
+            lat=locations.location[0].location[locations.location[0].location.length-1].location._lat
+            currentPID=locations.location[0].pid
         }
+        
     }
-     
+    if(destination!==undefined){
+        if(destination.dataRetrieved){
+            long=destination.destination[0].destination._long
+            lat=destination.destination[0].destination._lat
+            currentPID=destination.destination[0].pid
+        }
+        
+        
+    } 
+      
+    const defaultCenter = {
+        lat: lat, lng: long
+    }; 
+    
     return(
         <>
             <CssBaseline />
@@ -149,59 +176,63 @@ function TrackForm(pid) {
                             </span>
                         </div>
                         <br/>  
-                        <Button fullWidth type="submit"  variant="contained"color="secondary" >Submit</Button>
+                        <Button fullWidth type="submit"  variant="contained"color="primary" >Submit</Button>
                         <br/><br/>
                     </form>
 
                 
                 </Typography>
                 
-                {((locations.dataRetrieved))?
-                <Dialog
-                    open={open}
-                    TransitionComponent={Transition}
-                    keepMounted
-                    onClose={handleClose}
-                    aria-labelledby="alert-dialog-slide-title"
-                    aria-describedby="alert-dialog-slide-description"
-                    >
-                    <DialogTitle id="alert-dialog-slide-title">{'Estimated Delivery Time'}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-slide-description">
-                            Post ID:{locations.location[0].pid}<br/><br/>
-                            Maximum number of days for delivery :{days}
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose} color="primary">
-                        Close
-                        </Button>
-                    </DialogActions>
-                    </Dialog>
-                :((locations.isLoading)?
-                (<Grid
-                    container
-                    alignItems="center"
-                    style={{ marginTop: "25%",marginLeft:"45%" }}
-                >
-                    <Grid item>
-                    <CircularProgress size={60} color="secondary" />
-                    </Grid>
-                </Grid>): 
-                ((open===true)?            
-                (    
-                <p style={{color:"red",textAlign:"center",marginTop: "25%",marginLeft:"45%"}}>Error Occured: Please try again later</p>
-                ):
-                (<p></p>)))
-
-            }
+               
+                <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+                    <AppBar className={classes.appBar}>
+                    <Toolbar>
+                        <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+                        <CloseIcon />
+                        </IconButton>
+                        <Typography variant="h6" className={classes.title}>
+                        Location
+                        </Typography>
+                    </Toolbar>
+                    </AppBar>
+                    <LoadScript
+                        googleMapsApiKey='AIzaSyC1yEuCzdrETdnciayw9X8t246drbCJ51M'>
+                        <GoogleMap
+                            mapContainerStyle={mapStyles}
+                            zoom={13}
+                            center={defaultCenter}
+                        >
+                        {(window.google)?
+                        <Marker position={{ lat: lat, lng: long}} icon={{url: marker ,scaledSize: new window.google.maps.Size(47, 47)}} clickable onClick={onMarkerClick}>
+                            {showingInfoWindow === true && (
+                            <InfoWindow
+                                position={{
+                                lat: lat,
+                                lng: long
+                                }}
+                                onCloseClick={onInfoWindowClose}
+                            >
+                                <div>
+                                <p>Post ID: {currentPID}<br/><br/>
+                                Latitude: {lat}<br/><br/>
+                                Longitude: {long}
+                                </p>
+                                </div>
+                            </InfoWindow>
+                            )}
+                        </Marker>
+                        :<p></p>}   
+                        </GoogleMap>
+                    </LoadScript>
+                    
+                
+                </Dialog>
             </Container>
             </Grid>
             </Grid>
         </>
     )
                             
-    
-}
+    }
 
 export default TrackForm;

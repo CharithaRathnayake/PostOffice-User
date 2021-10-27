@@ -1,5 +1,5 @@
 .dropdown-menu {
-  background: red;
+  background: rgb(55, 0, 255);
   width: 200px;
   position: absolute;
   top: 80px;
@@ -8,12 +8,12 @@
 }
 
 .dropdown-menu li {
-  background: #500402;
+  background: #0e0250;
   cursor: pointer;
 }
 
 .dropdown-menu li:hover {
-  background: #f14f49;
+  background: #6249f1;
 }
 
 .dropdown-menu.clicked {

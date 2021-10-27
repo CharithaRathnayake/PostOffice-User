@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-function MoneyOrderForm({postOffice,Ppid,Dpid}) {
+function ComplaintForm({postOffice,Ppid,Dpid}) {
     const PID=Ppid.map((option)=> (option.pid))
     const delivered=Dpid.map((option)=>(option.pid))
     PID.push(...delivered);
@@ -248,7 +248,7 @@ function MoneyOrderForm({postOffice,Ppid,Dpid}) {
                         </div>
                         <br/>
                             
-                        <Button fullWidth type="submit"  variant="contained"color="secondary" >Submit</Button>
+                        <Button fullWidth type="submit"  variant="contained"color="primary" >Submit</Button>
                         <br/><br/>
                     </form>
 
@@ -261,4 +261,4 @@ function MoneyOrderForm({postOffice,Ppid,Dpid}) {
     
 }
 
-export default MoneyOrderForm;
+export default ComplaintForm;

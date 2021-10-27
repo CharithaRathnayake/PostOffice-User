@@ -12,4 +12,3 @@ export function getPostLocationSuccess (postLocations){
 export function getPostLocationFail (error){
     return{type: types.GET_POSTLOCATIONS_FAIL,error}
 };
-

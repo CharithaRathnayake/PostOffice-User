@@ -7,15 +7,20 @@ function Footer() {
   return (
     <div className='footer-container'>
         <div class='footer-logo'>
-            <h3>Post Office Management Information System</h3>
-            <img 
-            src="/App_Icon.png"
-            style={{ width: 220, height: 80,color:"white" }}
-            alt="Logo"
-          />
+            <h1>Post Office Management Information System</h1>
+            
         </div>
       <div class='footer-links'>
         <div className='footer-link-wrapper'>
+          <div class='footer-link-items'>
+            <br/><br/><br/>
+          <img 
+            src="/App_Icon.png"
+            style={{ width: 220, height: 80,color:"white" }}
+            alt="Logo"
+          />        
+          </div>
+
           <div class='footer-link-items'>
             <h2>Contact Us</h2>
             <p><i class="far fa-envelope"></i>info.it@slpost.lk / slpostitdiv@gmail.com</p>
@@ -28,8 +33,8 @@ function Footer() {
           <div class='footer-link-items'>
             <h2>Explore</h2>
             <Link to='/'>Home</Link>
-            <Link to='/'>About Us</Link>
-            <Link to='/'>Services</Link>
+            <Link to='/track'>Track Your Post</Link>
+            <Link to='/deliverytime'>Delivery Time</Link>
             <Link to='/complain'>Complaints</Link>
           </div>
           

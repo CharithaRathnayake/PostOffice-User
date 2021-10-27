@@ -1,6 +1,6 @@
 .hero-container {
-  background: url("../images/image-3.jpg") center center/cover no-repeat;
-  height: 100vh;
+  background: url("../images/postOffice.jpg") center center/cover no-repeat;
+  height: 140vh;
   width: 100%;
   display: flex;
   flex-direction: column;
