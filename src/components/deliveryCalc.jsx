@@ -14,7 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function DeliveryCalc(locations) {
 
     const [open, setOpen] = React.useState(true);
-    console.log("deliveryF[0]location",locations.locations.location[0].destination);
+    console.log("deliveryF[0]location",locations.locations);
         var dis = getDistance(
             {latitude: locations.locations.location[0].location[locations.locations.location[0].location.length-1].location._lat, longitude: locations.locations.location[0].location[locations.locations.location[0].location.length-1].location._long},
             {latitude: locations.locations.location[0].destination.location._lat, longitude: locations.locations.location[0].destination.location._long}

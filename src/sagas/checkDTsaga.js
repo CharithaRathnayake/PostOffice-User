@@ -13,7 +13,7 @@ function* getPostLocation(pid) {
     let post = Data.data();
     const postOfficeID=post.destinationPostoffice.id;
     //console.log(post.destinationPostoffice);
-    //console.log(postOfficeID);
+    console.log(post);
     const datat=firestore.collection("PostOffice").doc(postOfficeID);
     const channel2 =eventChannel((emit)=>datat.onSnapshot(emit));
     const destData=yield take(channel2);

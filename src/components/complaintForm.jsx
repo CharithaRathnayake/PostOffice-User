@@ -39,7 +39,7 @@ function ComplaintForm({postOffice,Ppid,Dpid}) {
     const PID=Ppid.map((option)=> (option.pid))
     const delivered=Dpid.map((option)=>(option.pid))
     PID.push(...delivered);
-    //console.log(PID);
+    console.log(postOffice);
     const validate =(values)=>{
         const errors={};
         // const value=[]

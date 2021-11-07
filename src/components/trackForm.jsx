@@ -80,11 +80,11 @@ function TrackForm(pid) {
             //console.log("pid");
             handleOpen();
              if(delivered.includes(initialState.values.pid)){
-                console.log("dest dispatch")
+                //console.log("dest dispatch")
                 dispatch(getDestinationStart(initialState));
                 
             }else{
-                console.log("dispatch loca")
+                //console.log("dispatch loca")
                 dispatch(getPostLocationStart(initialState));
                
             }                          
@@ -126,6 +126,8 @@ function TrackForm(pid) {
     const defaultCenter = {
         lat: lat, lng: long
     }; 
+
+    
     
     return(
         <>
@@ -184,6 +186,7 @@ function TrackForm(pid) {
                 </Typography>
                 
                
+               
                 <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
                     <AppBar className={classes.appBar}>
                     <Toolbar>
@@ -201,9 +204,11 @@ function TrackForm(pid) {
                             mapContainerStyle={mapStyles}
                             zoom={13}
                             center={defaultCenter}
+                            
                         >
-                        {(window.google)?
-                        <Marker position={{ lat: lat, lng: long}} icon={{url: marker ,scaledSize: new window.google.maps.Size(47, 47)}} clickable onClick={onMarkerClick}>
+                        
+                        
+                        <Marker position={{ lat: lat, lng: long}}  clickable onClick={onMarkerClick}>
                             {showingInfoWindow === true && (
                             <InfoWindow
                                 position={{
@@ -214,19 +219,20 @@ function TrackForm(pid) {
                             >
                                 <div>
                                 <p>Post ID: {currentPID}<br/><br/>
-                                Latitude: {lat}<br/><br/>
-                                Longitude: {long}
+                                Latitude: {lat}° N<br/>
+                                Longitude: {long}° E
                                 </p>
                                 </div>
                             </InfoWindow>
                             )}
                         </Marker>
-                        :<p></p>}   
+                          
                         </GoogleMap>
                     </LoadScript>
                     
                 
                 </Dialog>
+                
             </Container>
             </Grid>
             </Grid>

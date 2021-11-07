@@ -74,6 +74,7 @@ function DeliveryForm(pid) {
             <Grid item xs={5}>
             <Container className={classes.deliveryImage} maxwidth="sm">
                 <Typography component="div" style={{height: '50vh' ,textAlign:"center"}} >
+                <h1 style={{textAlign:"center"}}>Check Delivery Time</h1>
                 <img className={classes.img} alt="" src={delivery} />
                 </Typography>
             </Container>

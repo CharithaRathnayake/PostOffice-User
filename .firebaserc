@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "post-office-mis-505cc"
+  },
+  "targets": {
+    "post-office-mis-505cc": {
+      "hosting": {
+        "postofficeuser": [
+          "post-office-user-web"
+        ]
+      }
+    }
+  }
+}

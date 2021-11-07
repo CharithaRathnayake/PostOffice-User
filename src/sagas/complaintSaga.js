@@ -16,7 +16,7 @@ async function addComplaintDetails(name,email,contactNumber,pid,postoffice,messa
         pid:pid,
         postoffice:firestore.doc('PostOffice/'+postoffice),
         message:message,
-        state:"unsolved",
+        state:"unSolved",
         timestamp:firebase.firestore.Timestamp.now()
         
     })
