@@ -108,7 +108,7 @@ function ComplaintForm({postOffice,Ppid,Dpid}) {
                             <TextField
                                 required
                                 id="filled-full-width"
-                                label="required"
+                                label="Name"
                                 variant="filled"
                                 type="text"
                                 className="form-control"
@@ -130,7 +130,7 @@ function ComplaintForm({postOffice,Ppid,Dpid}) {
                             <TextField
                                 required
                                 id="filled-full-width"
-                                label="required"
+                                label="Email"
                                 variant="filled"
                                 type="email"
                                 className="form-control"
@@ -153,7 +153,7 @@ function ComplaintForm({postOffice,Ppid,Dpid}) {
                             <TextField
                                 required
                                 id="filled-full-width"
-                                label="required"
+                                label="Contact Number"
                                 variant="filled"
                                 type="tel"
                                 className="form-control"
@@ -176,7 +176,7 @@ function ComplaintForm({postOffice,Ppid,Dpid}) {
                             <TextField
                                 required
                                 id="filled-full-width"
-                                label="required"
+                                label="Post ID"
                                 variant="filled"
                                 type="tel"
                                 className="form-control"
@@ -210,6 +210,7 @@ function ComplaintForm({postOffice,Ppid,Dpid}) {
                             <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
+                            label="Post Office"
                             name="postOffice"
                             value={initialState.values.postOffice}
                             onChange={initialState.handleChange}
@@ -227,7 +228,7 @@ function ComplaintForm({postOffice,Ppid,Dpid}) {
                             <TextField
                                 required
                                 id="filled-full-width"
-                                label="required"
+                                label="Issue"
                                 variant="filled"
                                 type="text"
                                 className="form-control"

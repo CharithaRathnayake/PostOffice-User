@@ -60,7 +60,7 @@ function Navbar() {
             onMouseLeave={onMouseLeave}
           >
             <Link
-              to='/'
+              to='/track'
               className='nav-links'
               onClick={closeMobileMenu}
             >

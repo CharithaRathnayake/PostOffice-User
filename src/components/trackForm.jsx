@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 function TrackForm(pid) {
     //console.log(pid.Ppid);
     const locations = useSelector((state) => state.checkDTReducer);
-    const destination = useSelector((state) => state.trackingReducer);
+    //const destination = useSelector((state) => state.trackingReducer);
     const [open, setOpen] = React.useState(false);
     const [showingInfoWindow, setShowingInfoWindow] = React.useState(false);
     const classes = useStyles();
@@ -52,12 +52,15 @@ function TrackForm(pid) {
     let long;
     let lat;
     let currentPID;
+    let state;
     
     const dispatch = useDispatch();  
     const validate =(values)=>{
         const errors={};
         
-        if (PID.includes(values.pid)===false){
+        if (delivered.includes(values.pid)===true){
+            errors.pid="Your post has already delivered";
+        }else if (PID.includes(values.pid)===false){
             errors.pid="Post ID is not valid";
         }
         return errors;
@@ -79,15 +82,11 @@ function TrackForm(pid) {
             initialState.touched.pid=false;
             //console.log("pid");
             handleOpen();
-             if(delivered.includes(initialState.values.pid)){
-                //console.log("dest dispatch")
-                dispatch(getDestinationStart(initialState));
-                
-            }else{
+             
                 //console.log("dispatch loca")
-                dispatch(getPostLocationStart(initialState));
+            dispatch(getPostLocationStart(initialState));
                
-            }                          
+                                   
             
             resetForm({})
         },
@@ -110,18 +109,11 @@ function TrackForm(pid) {
             long=locations.location[0].location[locations.location[0].location.length-1].location._long
             lat=locations.location[0].location[locations.location[0].location.length-1].location._lat
             currentPID=locations.location[0].pid
+            state=locations.location[0].state
         }
         
     }
-    if(destination!==undefined){
-        if(destination.dataRetrieved){
-            long=destination.destination[0].destination._long
-            lat=destination.destination[0].destination._lat
-            currentPID=destination.destination[0].pid
-        }
-        
-        
-    } 
+     
       
     const defaultCenter = {
         lat: lat, lng: long
@@ -136,6 +128,7 @@ function TrackForm(pid) {
             <Grid item xs={5}>
             <Container className={classes.deliveryImage} maxwidth="sm">
                 <Typography component="div" style={{height: '50vh' ,textAlign:"center"}} >
+                <h1>Track Post</h1>
                 <img className={classes.img} alt="" src={track} />
                 </Typography>
             </Container>
@@ -218,7 +211,8 @@ function TrackForm(pid) {
                                 onCloseClick={onInfoWindowClose}
                             >
                                 <div>
-                                <p>Post ID: {currentPID}<br/><br/>
+                                <p>Post ID: {currentPID}<br/>
+                                State: {state}<br/><br/>
                                 Latitude: {lat}° N<br/>
                                 Longitude: {long}° E
                                 </p>

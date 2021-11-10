@@ -24,7 +24,8 @@ function* getPostLocation(pid) {
         location: post.locations,
         pid: pid,
         destination: destData.data(),
-        error:false
+        error:false,
+        state:post.state
 
     }
     //const postoffice=firestore.doc(post.destinationPostoffice);
@@ -48,7 +49,7 @@ export function* getPostLocationSaga(pid) {
     let location = yield call(getPostLocation, PID);
 
 
-    //console.log("res ", location);
+    console.log("res ", location);
     yield put(getPostLocationSuccess(location));
 
 }

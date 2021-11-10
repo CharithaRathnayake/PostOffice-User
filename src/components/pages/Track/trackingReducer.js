@@ -10,18 +10,18 @@ const initialState = {
 }
 
 function TrackingReducer (state=initialState,action){
-    console.log("trackingReducer");
+    //console.log("trackingReducer");
     switch(action.type){
         
         case types.GET_DESTINATION_START:
-            console.log("get Post start");
+            //console.log("get Post start");
             return{
                 ...state,
                 dataRetrieved:false,
                 isLoading:true
             };
         case types.GET_DESTINATION_SUCCESS:
-            console.log("GET_Destination_Success",action.destination);
+            //console.log("GET_Destination_Success",action.destination);
             
                 return{
                     ...state,

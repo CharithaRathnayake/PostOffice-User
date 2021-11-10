@@ -36,10 +36,10 @@ function* getPostOffice(){
 
     const Data = yield take(channel);
     console.log("Charitha");
-    return Data.docs.map((doc: any) => {
+    return Data.docs.map((doc) => {
         const data = doc.data();
         const documentID = doc.id;
-        //console.log(data.city);
+        console.log(data.city);
         return {
             
             code: documentID,
@@ -62,7 +62,7 @@ function* getPendingPID(){
     
 
     const Pending = yield take(channel1);
-    return Pending.docs.map((doc: any) => {
+    return Pending.docs.map((doc) => {
         
         const documentID = doc.id;
         //console.log(data.city);

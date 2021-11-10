@@ -5,7 +5,7 @@ const initialState = {
     location:[],
     dataRetrieved:false,
     isLoading:false,
-    pid:''
+    
         
 }
 
@@ -21,7 +21,7 @@ function DeliveryReducer (state=initialState,action){
                 isLoading:true
             };
         case types.GET_POSTLOCATIONS_SUCCESS:
-            console.log("GET_Locations_Success",action.postLocations);
+            //console.log("GET_Locations_Success",action.postLocations);
             
                 return{
                     ...state,
