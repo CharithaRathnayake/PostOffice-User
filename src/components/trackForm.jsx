@@ -47,6 +47,7 @@ function TrackForm(pid) {
     const [showingInfoWindow, setShowingInfoWindow] = React.useState(false);
     const classes = useStyles();
     const PID=pid.Ppid.map((option)=> (option.pid))
+    const type=pid.Ppid.map((option)=>(option.type))
     const delivered=pid.Dpid.map((option)=>(option.pid))
     PID.push(...delivered);
     let long;
@@ -62,6 +63,8 @@ function TrackForm(pid) {
             errors.pid="Your post has already delivered";
         }else if (PID.includes(values.pid)===false){
             errors.pid="Post ID is not valid";
+        }else if (type[PID.indexOf(values.pid)]==="MoneyOrder"){
+            errors.pid="Money Orders Cannot Track";
         }
         return errors;
     }

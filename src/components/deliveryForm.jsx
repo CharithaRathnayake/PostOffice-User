@@ -33,18 +33,22 @@ function DeliveryForm(pid) {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
     const PID=pid.Ppid.map((option)=> (option.pid))
+    const type=pid.Ppid.map((option)=>(option.type))
     const delivered=pid.Dpid.map((option)=>(option.pid))
     //console.log(delivered,PID);
 
     const dispatch = useDispatch();  
     const validate =(values)=>{
         const errors={};
-        //console.log(delivered.includes(values.pid));
+        //console.log("validation",type);
         if (delivered.includes(values.pid)===true){
             errors.pid="Your post has already delivered";
         }else if (PID.includes(values.pid)===false){
             errors.pid="Post ID is not valid";
+        }else if (type[PID.indexOf(values.pid)]==="MoneyOrder"){
+            errors.pid="This is a Money Order";
         }
+            
         return errors;
     }
     const handleOpen=()=>{

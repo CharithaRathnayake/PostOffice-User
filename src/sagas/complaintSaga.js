@@ -63,12 +63,13 @@ function* getPendingPID(){
 
     const Pending = yield take(channel1);
     return Pending.docs.map((doc) => {
-        
+        const data=doc.data()
         const documentID = doc.id;
-        //console.log(data.city);
+        //console.log(data.type);
         return {
             
-            pid:documentID
+            pid:documentID,
+            type:data.type
             
         };
     })
@@ -82,7 +83,7 @@ function* getDeliveredPID(){
     const channel2 = eventChannel((emit) => delivered.onSnapshot(emit));
 
     const Delivered = yield take(channel2);
-    return Delivered.docs.map((doc: any) => {
+    return Delivered.docs.map((doc) => {
         
         const documentID = doc.id;
         //console.log(data.city);
@@ -126,7 +127,7 @@ export function* getPIDSaga(){
     let Ppid = yield call(getPendingPID);
 
     let Dpid = yield call(getDeliveredPID);
-    //console.log("res ",postOffice);
+    //console.log("res ",Ppid);
     yield put(getPIDSuccess(Ppid,Dpid));
     
 }
